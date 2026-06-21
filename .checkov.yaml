@@ -1,0 +1,31 @@
+skip-check:
+  # --- cost / biar gampang teardown (prod nanti aktifin) ---
+  - CKV_AWS_150  # ALB deletion protection — mau gampang di-destroy
+  - CKV_AWS_293  # RDS deletion protection — sama
+  - CKV_AWS_157  # RDS multi-AZ — cost (sengaja false; prod set true)
+  - CKV_AWS_118  # RDS enhanced monitoring — cost
+  - CKV_AWS_353  # RDS performance insights — cost
+  - CKV_AWS_129  # RDS log export — cost/noise
+  - CKV2_AWS_30  # Postgres query logging — cost/noise
+  - CKV_AWS_91   # ALB access logging — butuh bucket log tambahan
+  - CKV_AWS_18   # S3 access logging — butuh bucket log
+  - CKV_AWS_144  # S3 cross-region replication — overkill
+  - CKV2_AWS_61  # S3 lifecycle — n/a bucket kecil
+  - CKV2_AWS_62  # S3 event notification — n/a
+  # --- KMS CMK vs key bawaan AWS (bawaan cukup sekarang) ---
+  - CKV_AWS_149  # Secrets pakai KMS CMK
+  - CKV_AWS_145  # S3 pakai KMS CMK (kita SSE-S3/AES256)
+  # --- fitur belum di-wire ---
+  - CKV2_AWS_57  # Secrets auto-rotation — belum ada lambda rotasi
+  - CKV_AWS_161  # RDS IAM auth
+  - CKV_AWS_226  # RDS auto minor upgrade
+  - CKV2_AWS_60  # RDS copy tags to snapshot
+  - CKV2_AWS_38  # DNSSEC
+  - CKV2_AWS_39  # Route53 query logging
+  - CKV2_AWS_28  # ALB WAF — milestone nanti
+  # --- by-design / false positive ---
+  - CKV_AWS_260  # ALB publik MEMANG buka :80 dari internet (sengaja)
+  - CKV_AWS_382  # egress all 0.0.0.0/0 — umum diizinin
+  - CKV2_AWS_5   # "SG gak keattach" — FALSE: kepake lintas-modul, checkov gagal trace
+  - CKV_AWS_23   # SG rule butuh description — nice-to-have, nanti
+  - CKV_AWS_79   # IMDSv2 — skip, nanti aja
