@@ -26,3 +26,33 @@ module "alb" {
   public_subnet_ids = module.network.public_subnet_ids
   alb_sg_id         = module.security.alb_sg_id
 }
+
+module "compute" {
+  source           = "../../modules/compute"
+  name_prefix      = "procal"
+  subnet_ids       = module.network.private_subnet_ids
+  app_sg_id        = module.security.app_sg_id
+  target_group_arn = module.alb.target_group_arn
+}
+
+module "sqs" {
+  source      = "../../modules/sqs"
+  name_prefix = "procal"
+}
+
+module "s3" {
+  source      = "../../modules/s3"
+  bucket_name = "procal-apps-555431941608"
+}
+
+module "secrets" {
+  source      = "../../modules/secrets"
+  name_prefix = "procal"
+}
+
+module "dns" {
+  source         = "../../modules/dns"
+  public_domain  = "procal.saputra.dev"
+  private_domain = "procal.internal"
+  vpc_id         = module.network.vpc_id
+}
