@@ -11,15 +11,15 @@ variable "alb_sg_id" {
   type = string
 }
 variable "target_port" {
-  type = number
+  type    = number
   default = 8000
 }
 variable "health_check_path" {
-  type = string
+  type    = string
   default = "/health"
 }
 variable "tags" {
-  type = map(string)
+  type    = map(string)
   default = {}
 }
 variable "certificate_arn" {

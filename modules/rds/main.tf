@@ -17,10 +17,10 @@ resource "aws_db_instance" "this" {
   username                    = var.master_username
   manage_master_user_password = true
 
-  db_subnet_group_name = aws_db_subnet_group.this.name
+  db_subnet_group_name   = aws_db_subnet_group.this.name
   vpc_security_group_ids = var.vpc_security_group_ids
-  multi_az = var.multi_az
-  publicly_accessible = false
+  multi_az               = var.multi_az
+  publicly_accessible    = false
 
   skip_final_snapshot = true
   deletion_protection = false
