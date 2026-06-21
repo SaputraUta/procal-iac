@@ -1,9 +1,10 @@
 resource "aws_lb" "this" {
-  name               = "${var.name_prefix}-alb"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [var.alb_sg_id]
-  subnets            = var.public_subnet_ids
+  name                       = "${var.name_prefix}-alb"
+  internal                   = false
+  load_balancer_type         = "application"
+  security_groups            = [var.alb_sg_id]
+  subnets                    = var.public_subnet_ids
+  drop_invalid_header_fields = true
 
   tags = merge(var.tags, { Name = "${var.name_prefix}-alb" })
 }
