@@ -1,3 +1,6 @@
 output "public_zone_id"      { value = aws_route53_zone.public.zone_id }
 output "private_zone_id"     { value = aws_route53_zone.private.zone_id }
 output "public_name_servers" { value = aws_route53_zone.public.name_servers }
+output "certificate_arn" {
+  value = aws_acm_certificate_validation.this.certificate_arn
+}

@@ -25,6 +25,7 @@ module "alb" {
   vpc_id            = module.network.vpc_id
   public_subnet_ids = module.network.public_subnet_ids
   alb_sg_id         = module.security.alb_sg_id
+  certificate_arn   = module.dns.certificate_arn
 }
 
 module "compute" {
@@ -55,4 +56,16 @@ module "dns" {
   public_domain  = "procal.saputra.dev"
   private_domain = "procal.internal"
   vpc_id         = module.network.vpc_id
+}
+
+resource "aws_route53_record" "app" {
+  zone_id = module.dns.public_zone_id
+  name    = "procal.saputra.dev"
+  type    = "A"
+
+  alias {
+    name                   = module.alb.alb_dns_name
+    zone_id                = module.alb.alb_zone_id
+    evaluate_target_health = true
+  }
 }
