@@ -35,3 +35,5 @@ skip-check:
   - CKV2_AWS_12  # default SG restrict-all — gak ngelola default SG
   - CKV_AWS_378  # LB pakai HTTP — internal HTTP di belakang ALB (TLS udah di-terminate ALB)
   - CKV2_AWS_11  # VPC flow logs — cost/setup, skip buat belajar
+  - CKV_AWS_8    # EBS encryption di EC2 tooling — box throwaway, no data (prod: encrypt)
+  - CKV_AWS_126  # detailed monitoring EC2 — berbayar, skip
