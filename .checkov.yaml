@@ -29,3 +29,9 @@ skip-check:
   - CKV2_AWS_5   # "SG gak keattach" — FALSE: kepake lintas-modul, checkov gagal trace
   - CKV_AWS_23   # SG rule butuh description — nice-to-have, nanti
   - CKV_AWS_79   # IMDSv2 — skip, nanti aja
+  - CKV_AWS_130  # public subnet auto-assign public IP — by design (ALB/NAT butuh)
+  - CKV_AWS_274  # AdministratorAccess di Atlantis — perlu izin luas buat apply (prod: scope down)
+  - CKV_AWS_135  # EC2 EBS-optimized — n/a instance kecil
+  - CKV2_AWS_12  # default SG restrict-all — gak ngelola default SG
+  - CKV_AWS_378  # LB pakai HTTP — internal HTTP di belakang ALB (TLS udah di-terminate ALB)
+  - CKV2_AWS_11  # VPC flow logs — cost/setup, skip buat belajar
