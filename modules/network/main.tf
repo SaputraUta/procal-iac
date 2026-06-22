@@ -22,7 +22,7 @@ resource "aws_subnet" "public" {
 }
 
 resource "aws_subnet" "private" {
-  count             = core::length(var.azs)
+  count             = length(var.azs)
   vpc_id            = aws_vpc.this.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + 10)
   availability_zone = var.azs[count.index]
@@ -78,5 +78,20 @@ resource "aws_route_table_association" "public" {
 resource "aws_route_table_association" "private" {
   count          = length(var.azs)
   subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private.id
+}
+
+resource "aws_subnet" "tooling" {
+  count             = length(var.azs)
+  vpc_id            = aws_vpc.this.id
+  cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + 20)
+  availability_zone = var.azs[count.index]
+
+  tags = merge(var.tags, { Name = "${var.name_prefix}-tooling-${count.index}" })
+}
+
+resource "aws_route_table_association" "tooling" {
+  count          = length(var.azs)
+  subnet_id      = aws_subnet.tooling[count.index].id
   route_table_id = aws_route_table.private.id
 }

@@ -7,3 +7,6 @@ output "target_group_arn" {
 output "alb_zone_id" {
   value = aws_lb.this.zone_id
 }
+output "https_listener_arn" {
+  value = aws_lb_listener.https.arn
+}
