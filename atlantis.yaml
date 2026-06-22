@@ -3,6 +3,7 @@ projects:
   - name: foundation
     dir: live/foundation
     terraform_version: v1.9.0
+    terraform_distribution: opentofu
     autoplan:
       when_modified:
         - "*.tf"
