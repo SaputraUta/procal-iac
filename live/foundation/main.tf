@@ -69,3 +69,20 @@ resource "aws_route53_record" "app" {
     evaluate_target_health = true
   }
 }
+
+module "atlantis" {
+  source             = "../../modules/tooling_service"
+  name               = "atlantis"
+  vpc_id             = module.network.vpc_id
+  subnet_id          = module.network.tooling_subnet_ids[0]
+  alb_sg_id          = module.security.alb_sg_id
+  https_listener_arn = module.alb.https_listener_arn
+  public_zone_id     = module.dns.public_zone_id
+  alb_dns_name       = module.alb.alb_dns_name
+  alb_zone_id        = module.alb.alb_zone_id
+  hostname           = "atlantis.procal.saputra.dev"
+  app_port           = 4141
+  health_check_path  = "/healthz"
+  listener_priority  = 100
+  policy_arns        = ["arn:aws:iam::aws:policy/AdministratorAccess"]
+} # test atlantis
